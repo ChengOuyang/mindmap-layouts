@@ -11,41 +11,41 @@
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -56,7 +56,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -65,24 +65,27 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(5);
+"use strict";
 
-module.exports = arr => {
+
+var randomInt = __webpack_require__(5);
+
+module.exports = function (arr) {
     if (!Array.isArray(arr) || !arr.length) {
         return null;
     }
@@ -95,27 +98,40 @@ module.exports = arr => {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomInt = __webpack_require__(5);
+"use strict";
 
-module.exports = (start, end) => start + randomInt(end - start);
+
+var randomInt = __webpack_require__(5);
+
+module.exports = function (start, end) {
+  return start + randomInt(end - start);
+};
 
 /***/ }),
 /* 4 */,
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = n => Math.round(Math.random() * n);
+"use strict";
+
+
+module.exports = function (n) {
+  return Math.round(Math.random() * n);
+};
 
 /***/ }),
 /* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomTree = __webpack_require__(25);
-const utils = __webpack_require__(8);
+"use strict";
 
-const res = Object.assign({
-    randomTree
+
+var randomTree = __webpack_require__(27);
+var utils = __webpack_require__(8);
+
+var res = Object.assign({
+    randomTree: randomTree
 }, utils);
 
 module.exports = res;
@@ -123,6 +139,9 @@ module.exports = res;
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports = {
     randomCharFromCategories: __webpack_require__(9),
@@ -134,16 +153,19 @@ module.exports = {
     randomLetter: __webpack_require__(12),
     randomNumber: __webpack_require__(13),
     randomSpecial: __webpack_require__(14),
-    randomString: __webpack_require__(26),
-    uuid: __webpack_require__(27)
+    randomString: __webpack_require__(28),
+    uuid: __webpack_require__(29)
 };
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromArray = __webpack_require__(0);
-const randomByCats = {
+"use strict";
+
+
+var randomFromArray = __webpack_require__(0);
+var randomByCats = {
     chinese: __webpack_require__(10),
     japanese: __webpack_require__(11),
     letter: __webpack_require__(12),
@@ -151,8 +173,8 @@ const randomByCats = {
     special: __webpack_require__(14)
 };
 
-module.exports = cats => {
-    const cat = randomFromArray(cats);
+module.exports = function (cats) {
+    var cat = randomFromArray(cats);
     return randomByCats[cat]();
 };
 
@@ -160,23 +182,31 @@ module.exports = cats => {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromRange = __webpack_require__(3);
+"use strict";
 
-const range = {
+
+var randomFromRange = __webpack_require__(3);
+
+var range = {
     start: 0x4E00,
     end: 0x9FA5
 };
 
-module.exports = () => String.fromCharCode(randomFromRange(range.start, range.end));
+module.exports = function () {
+    return String.fromCharCode(randomFromRange(range.start, range.end));
+};
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromArray = __webpack_require__(0);
-const randomFromRange = __webpack_require__(3);
+"use strict";
 
-const ranges = [{
+
+var randomFromArray = __webpack_require__(0);
+var randomFromRange = __webpack_require__(3);
+
+var ranges = [{
     start: 0x3040,
     end: 0x309F
 }, {
@@ -184,8 +214,8 @@ const ranges = [{
     end: 0x30FF
 }];
 
-module.exports = () => {
-    const range = randomFromArray(ranges);
+module.exports = function () {
+    var range = randomFromArray(ranges);
     return String.fromCharCode(randomFromRange(range.start, range.end));
 };
 
@@ -193,46 +223,66 @@ module.exports = () => {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 
-const randomFromArray = __webpack_require__(0);
 
-const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+var randomFromArray = __webpack_require__(0);
 
-module.exports = () => randomFromArray(letters);
+var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+module.exports = function () {
+  return randomFromArray(letters);
+};
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromArray = __webpack_require__(0);
+"use strict";
 
-const numbers = '0123456789'.split('');
 
-module.exports = () => randomFromArray(numbers);
+var randomFromArray = __webpack_require__(0);
+
+var numbers = '0123456789'.split('');
+
+module.exports = function () {
+  return randomFromArray(numbers);
+};
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomFromArray = __webpack_require__(0);
+"use strict";
 
-const specialChars = '!$%^&*()_+|~-=`{}[]:;<>?,./'.split('');
 
-module.exports = () => randomFromArray(specialChars);
+var randomFromArray = __webpack_require__(0);
+
+var specialChars = '!$%^&*()_+|~-=`{}[]:;<>?,./'.split('');
+
+module.exports = function () {
+  return randomFromArray(specialChars);
+};
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-const lineColor = '#999';
+"use strict";
 
-module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
-  let beginNode = n;
-  let endNode = c;
-  let beginX;
-  let beginY;
-  let endX;
-  let endY;
+
+var lineColor = '#999';
+
+module.exports = function (n, c, ctx) {
+  var isHorizontal = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var scale = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+
+  var beginNode = n;
+  var endNode = c;
+  var beginX = void 0;
+  var beginY = void 0;
+  var endX = void 0;
+  var endY = void 0;
   if (isHorizontal) {
     if (n.x > c.x) {
       beginNode = c;
@@ -276,18 +326,23 @@ module.exports = (n, c, ctx, isHorizontal = false, scale = 1) => {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomColor = __webpack_require__(24);
+"use strict";
 
-const PEM = 18;
 
-module.exports = (node, ctx, scale = 1) => {
-  const origin = node.data;
-  const color = randomColor();
+var randomColor = __webpack_require__(25);
+
+var PEM = 18;
+
+module.exports = function (node, ctx) {
+  var scale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+  var origin = node.data;
+  var color = randomColor();
   // console.log(color.toRgba());
-  const x = Math.round(node.x + node.hgap);
-  const y = Math.round(node.y + node.vgap);
-  const width = Math.round(node.width - node.hgap * 2);
-  const height = Math.round(node.height - node.vgap * 2);
+  var x = Math.round(node.x + node.hgap);
+  var y = Math.round(node.y + node.vgap);
+  var width = Math.round(node.width - node.hgap * 2);
+  var height = Math.round(node.height - node.vgap * 2);
   // const x = Math.round(node.x)
   // const y = Math.round(node.y)
   // const width = Math.round(node.width)
@@ -300,9 +355,9 @@ module.exports = (node, ctx, scale = 1) => {
   ctx.strokeRect(x / scale, y / scale, width / scale, height / scale);
   // text
   if (origin.isRoot) {
-    ctx.font = `${PEM * 2 / scale}px Courier, monospace`;
+    ctx.font = PEM * 2 / scale + 'px Courier, monospace';
   } else {
-    ctx.font = `${PEM / scale}px Courier, monospace`;
+    ctx.font = PEM / scale + 'px Courier, monospace';
   }
   ctx.fillStyle = '#666';
   ctx.fillText(origin.name, (x + PEM * 0.8) / scale, (y + (origin.isRoot ? PEM * 2 : PEM * 1)) / scale);
@@ -312,26 +367,30 @@ module.exports = (node, ctx, scale = 1) => {
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {
-  randomTree
-} = __webpack_require__(7);
+"use strict";
 
-module.exports = size => randomTree({
-  size: size - 1,
-  attributes: {
-    id: {
-      type: 'uuid'
-    },
-    name: {
-      type: 'randomString',
-      options: {
-        length: 0,
-        maxLength: 16,
-        categories: ['japanese', 'letter', 'chinese', 'special']
+
+var _require = __webpack_require__(7),
+    randomTree = _require.randomTree;
+
+module.exports = function (size) {
+  return randomTree({
+    size: size - 1,
+    attributes: {
+      id: {
+        type: 'uuid'
+      },
+      name: {
+        type: 'randomString',
+        options: {
+          length: 0,
+          maxLength: 16,
+          categories: ['japanese', 'letter', 'chinese', 'special']
+        }
       }
     }
-  }
-});
+  });
+};
 
 /***/ }),
 /* 18 */,
@@ -343,35 +402,154 @@ module.exports = size => randomTree({
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Color = __webpack_require__(28);
-const {
-  randomInt
-} = __webpack_require__(7);
+"use strict";
 
-module.exports = () => {
-  const rgba = `rgba(${randomInt(255)}, ${randomInt(255)}, ${randomInt(255)}, 0.6)`;
-  return new Color(rgba);
+
+var randomTree = __webpack_require__(17);
+var drawLink = __webpack_require__(15);
+var drawNode = __webpack_require__(16);
+
+var canvas = document.getElementById('canvas');
+var containerNode = document.getElementById('container');
+var formNode = document.getElementById('layout-props');
+var layoutTimeNode = document.getElementById('layout-time');
+var renderTimeNode = document.getElementById('render-time');
+
+var PEM = 18;
+var ctx = canvas.getContext('2d');
+
+var HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical', 'Standard'];
+function isHorizontal(type) {
+  return HORIZONTAL_LAYOUTS.indexOf(type) > -1;
+}
+
+function setCanvasSize() {
+  canvas.width = containerNode.offsetWidth;
+  canvas.height = containerNode.offsetHeight;
+}
+
+function render() {
+  var count = formNode.dataSize.value;
+  var layoutType = formNode.layoutType.value;
+  var root = randomTree(count);
+  Object.assign(root, {
+    isRoot: true
+  });
+
+  ctx.font = PEM + 'px Courier, monospace';
+
+  var MindmapLayout = MindmapLayouts[layoutType];
+  var layout = new MindmapLayout(root, {
+    getHeight: function getHeight(d) {
+      if (d.isRoot) {
+        return PEM * 2.4;
+      }
+      return PEM * 1.2;
+    },
+    getWidth: function getWidth(d) {
+      if (d.isRoot) {
+        return ctx.measureText(d.name).width * 2 + PEM * 1.6;
+      }
+      return ctx.measureText(d.name).width + PEM * 1.6;
+    },
+    getHGap: function getHGap(d) {
+      if (d.isRoot) {
+        return PEM * 2;
+      }
+      return Math.round(PEM / 2);
+    },
+    getVGap: function getVGap(d) {
+      if (d.isRoot) {
+        return PEM * 2;
+      }
+      return Math.round(PEM / 2);
+    }
+  });
+
+  var t0 = window.performance.now();
+
+  var rootNode = layout.doLayout();
+
+  var t1 = window.performance.now();
+
+  setCanvasSize();
+  var bb = rootNode.getBoundingBox();
+  var scale = Math.max(bb.width / canvas.width, bb.height / canvas.height);
+  canvas.width = bb.width / scale;
+  canvas.height = bb.height / scale;
+
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    rootNode.eachNode(function (node) {
+      node.children.forEach(function (child) {
+        drawLink(node, child, ctx, isHorizontal(layoutType), scale);
+      });
+      drawNode(node, ctx, scale);
+    });
+  }
+
+  var t2 = window.performance.now();
+
+  layoutTimeNode.innerHTML = Math.round(t1 - t0);
+  renderTimeNode.innerHTML = Math.round(t2 - t1);
+}
+
+formNode.addEventListener('change', render);
+formNode.addEventListener('submit', function (e) {
+  e.preventDefault();
+  render();
+  return false;
+});
+window.onresize = function () {
+  setCanvasSize();
+  render();
 };
+
+setCanvasSize();
+render();
+
+module.exports = MindmapLayouts;
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const utils = __webpack_require__(8);
+"use strict";
+
+
+var Color = __webpack_require__(30);
+
+var _require = __webpack_require__(7),
+    randomInt = _require.randomInt;
+
+module.exports = function () {
+  var rgba = 'rgba(' + randomInt(255) + ', ' + randomInt(255) + ', ' + randomInt(255) + ', 0.6)';
+  return new Color(rgba);
+};
+
+/***/ }),
+/* 26 */,
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(8);
 
 function generateRoot(options) {
-    const root = {
+    var root = {
         children: []
     };
-    const attributes = options.attributes;
-    for (let key in attributes) {
+    var attributes = options.attributes;
+    for (var key in attributes) {
         root[key] = utils[attributes[key].type](attributes[key].options);
     }
     return root;
 }
 
 function generateNode(root, child) {
-    const rand = utils.randomInt(root.children.length);
+    var rand = utils.randomInt(root.children.length);
     if (rand === root.children.length) {
         root.children.push(child);
     } else {
@@ -379,7 +557,7 @@ function generateNode(root, child) {
     }
 }
 
-const DEFAULT_OPTIONS = {
+var DEFAULT_OPTIONS = {
     size: 10,
     attributes: {
         id: {
@@ -395,9 +573,9 @@ const DEFAULT_OPTIONS = {
 };
 
 function randomTree(customizedOptions) {
-    const options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
-    const root = generateRoot(options);
-    for (let i = 0; i < options.size; i++) {
+    var options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
+    var root = generateRoot(options);
+    for (var i = 0; i < options.size; i++) {
         generateNode(root, generateRoot(options));
     }
     return root;
@@ -406,13 +584,16 @@ function randomTree(customizedOptions) {
 module.exports = randomTree;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const randomCharFromCats = __webpack_require__(9);
-const randomFromRange = __webpack_require__(3);
+"use strict";
 
-const DEFAULT_OPTIONS = {
+
+var randomCharFromCats = __webpack_require__(9);
+var randomFromRange = __webpack_require__(3);
+
+var DEFAULT_OPTIONS = {
     length: 6,
     maxLength: 6,
     capitalization: 'lowercase', // lowercase, uppercase
@@ -421,11 +602,11 @@ const DEFAULT_OPTIONS = {
     'letter']
 };
 
-module.exports = customizedOptions => {
-    const options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
-    let res = '';
-    const len = options.length ? options.length : randomFromRange(1, options.maxLength);
-    for (let i = 0; i < len; i++) {
+module.exports = function (customizedOptions) {
+    var options = Object.assign({}, DEFAULT_OPTIONS, customizedOptions);
+    var res = '';
+    var len = options.length ? options.length : randomFromRange(1, options.maxLength);
+    for (var i = 0; i < len; i++) {
         res += randomCharFromCats(options.categories);
     }
     if (options.capitalization === 'uppercase') {
@@ -435,22 +616,34 @@ module.exports = customizedOptions => {
 };
 
 /***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-module.exports = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : r & 0x3 | 0x8;
-    return v.toString(16);
-});
-
-/***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const namedColor = __webpack_require__(29);
+"use strict";
 
-const round = Math.round;
+
+module.exports = function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0;
+        var v = c === 'x' ? r : r & 0x3 | 0x8;
+        return v.toString(16);
+    });
+};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var namedColor = __webpack_require__(31);
+
+var round = Math.round;
 
 function isString(obj) {
   return typeof obj === 'string';
@@ -476,7 +669,7 @@ function hue2rgb(m1, m2, h) {
   if (h > 1) {
     --h;
   }
-  const h6 = 6 * h;
+  var h6 = 6 * h;
   if (h6 < 1) {
     return m1 + (m2 - m1) * h6;
   }
@@ -489,16 +682,16 @@ function hue2rgb(m1, m2, h) {
   return m1;
 }
 function rgb2hsl(r, g, b, a) {
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h;
-  let s;
-  const l = (max + min) / 2;
+  var max = Math.max(r, g, b);
+  var min = Math.min(r, g, b);
+  var h = void 0;
+  var s = void 0;
+  var l = (max + min) / 2;
 
   if (max === min) {
     h = s = 0;
   } else {
-    const d = max - min;
+    var d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
       case r:
@@ -518,15 +711,17 @@ function rgb2hsl(r, g, b, a) {
   return [h, s, l, a];
 }
 
-class Color {
+var Color = function () {
   // init props
   // r: 255,
   // g: 255,
   // b: 255,
   // a: 1,
 
-  constructor( /* Array|String|Object */color) {
-    let me = this;
+  function Color( /* Array|String|Object */color) {
+    _classCallCheck(this, Color);
+
+    var me = this;
     if (color) {
       if (isString(color)) {
         me = Color.fromString(color);
@@ -544,69 +739,80 @@ class Color {
     return me;
   }
 
-  set(r, g, b, a) {
-    const me = this;
-    me.r = r;
-    me.g = g;
-    me.b = b;
-    me.a = a;
-  }
+  _createClass(Color, [{
+    key: 'set',
+    value: function set(r, g, b, a) {
+      var me = this;
+      me.r = r;
+      me.g = g;
+      me.b = b;
+      me.a = a;
+    }
+  }, {
+    key: 'sanitize',
+    value: function sanitize() {
+      var me = this;
+      me.r = round(confine(me.r, 0, 255));
+      me.g = round(confine(me.g, 0, 255));
+      me.b = round(confine(me.b, 0, 255));
+      me.a = confine(me.a, 0, 1);
+      return me;
+    }
+  }, {
+    key: 'toRgba',
+    value: function toRgba() {
+      var me = this;
+      return [me.r, me.g, me.b, me.a];
+    }
+  }, {
+    key: 'toHsla',
+    value: function toHsla() {
+      var me = this;
+      return rgb2hsl(me.r, me.g, me.b, me.a);
+    }
+  }, {
+    key: 'toHex',
+    value: function toHex() {
+      var me = this;
+      var arr = ['r', 'g', 'b'].map(function (x) {
+        var str = me[x].toString(16);
+        return str.length < 2 ? '0' + str : str;
+      });
+      return '#' + arr.join('');
+    }
+  }, {
+    key: 'toCss',
+    value: function toCss( /* Boolean? */includeAlpha) {
+      var me = this;
+      var rgb = me.r + ',' + me.g + ',' + me.b;
+      return includeAlpha ? 'rgba(' + rgb + ',' + me.a + ')' : 'rgb(' + rgb + ')';
+    }
+  }, {
+    key: 'toString',
+    value: function toString() {
+      return this.toCss(true);
+    }
+  }, {
+    key: 'toGrey',
+    value: function toGrey() {
+      var me = this;
+      var g = round((me.r + me.g + me.b) / 3);
+      return Color.makeGrey(g, me.a);
+    }
+  }]);
 
-  sanitize() {
-    const me = this;
-    me.r = round(confine(me.r, 0, 255));
-    me.g = round(confine(me.g, 0, 255));
-    me.b = round(confine(me.b, 0, 255));
-    me.a = confine(me.a, 0, 1);
-    return me;
-  }
-
-  toRgba() {
-    const me = this;
-    return [me.r, me.g, me.b, me.a];
-  }
-
-  toHsla() {
-    const me = this;
-    return rgb2hsl(me.r, me.g, me.b, me.a);
-  }
-
-  toHex() {
-    const me = this;
-    const arr = ['r', 'g', 'b'].map(x => {
-      const str = me[x].toString(16);
-      return str.length < 2 ? `0${str}` : str;
-    });
-    return `#${arr.join('')}`;
-  }
-
-  toCss( /* Boolean? */includeAlpha) {
-    const me = this;
-    const rgb = `${me.r},${me.g},${me.b}`;
-    return includeAlpha ? `rgba(${rgb},${me.a})` : `rgb(${rgb})`;
-  }
-
-  toString() {
-    return this.toCss(true);
-  }
-
-  toGrey() {
-    const me = this;
-    const g = round((me.r + me.g + me.b) / 3);
-    return Color.makeGrey(g, me.a);
-  }
-}
+  return Color;
+}();
 
 Object.assign(Color, {
   hexByName: namedColor,
 
-  makeGrey( /* Number */g, /* Number? */a) {
+  makeGrey: function makeGrey( /* Number */g, /* Number? */a) {
     return Color.fromArray([g, g, g, a]);
   },
-
-  blendColors( /* Color */start, /* Color */end, /* Number */weight, /* Color? */obj) {
-    const t = obj || new Color();
-    ['r', 'g', 'b', 'a'].forEach(x => {
+  blendColors: function blendColors( /* Color */start, /* Color */end, /* Number */weight, /* Color? */obj) {
+    var t = obj || new Color();
+    ['r', 'g', 'b', 'a'].forEach(function (x) {
       t[x] = start[x] + (end[x] - start[x]) * weight;
       if (x !== 'a') {
         t[x] = Math.round(t[x]);
@@ -614,39 +820,38 @@ Object.assign(Color, {
     });
     return t.sanitize();
   },
+  fromHex: function fromHex( /* String */color) {
+    var result = new Color();
+    var bits = color.length === 4 ? 4 : 8;
+    var mask = (1 << bits) - 1;
 
-  fromHex( /* String */color) {
-    const result = new Color();
-    const bits = color.length === 4 ? 4 : 8;
-    const mask = (1 << bits) - 1;
-
-    color = Number(`0x${color.substr(1)}`);
+    color = Number('0x' + color.substr(1));
 
     if (isNaN(color)) {
       return null;
     }
-    ['b', 'g', 'r'].forEach(x => {
-      const c = color & mask;
+    ['b', 'g', 'r'].forEach(function (x) {
+      var c = color & mask;
       color >>= bits;
       result[x] = bits === 4 ? 17 * c : c;
     });
     return result;
   },
-  fromRgb( /* String */color) {
-    const matches = lc(color).match(/^rgba?\(([\s.,0-9]+)\)/);
+  fromRgb: function fromRgb( /* String */color) {
+    var matches = lc(color).match(/^rgba?\(([\s.,0-9]+)\)/);
     return matches && Color.fromArray(matches[1].split(/\s*,\s*/));
   },
-  fromHsl( /* String */color) {
-    const matches = lc(color).match(/^hsla?\(([\s.,0-9]+)\)/);
+  fromHsl: function fromHsl( /* String */color) {
+    var matches = lc(color).match(/^hsla?\(([\s.,0-9]+)\)/);
     if (matches) {
-      const c = matches[2].split(/\s*,\s*/);
-      const l = c.length;
-      const H = (parseFloat(c[0]) % 360 + 360) % 360 / 360;
-      const S = parseFloat(c[1]) / 100;
-      const L = parseFloat(c[2]) / 100;
-      const m2 = L <= 0.5 ? L * (S + 1) : L + S - L * S;
-      const m1 = 2 * L - m2;
-      const a = [hue2rgb(m1, m2, H + 1 / 3) * 256, hue2rgb(m1, m2, H) * 256, hue2rgb(m1, m2, H - 1 / 3) * 256, 1];
+      var c = matches[2].split(/\s*,\s*/);
+      var l = c.length;
+      var H = (parseFloat(c[0]) % 360 + 360) % 360 / 360;
+      var S = parseFloat(c[1]) / 100;
+      var L = parseFloat(c[2]) / 100;
+      var m2 = L <= 0.5 ? L * (S + 1) : L + S - L * S;
+      var m1 = 2 * L - m2;
+      var a = [hue2rgb(m1, m2, H + 1 / 3) * 256, hue2rgb(m1, m2, H) * 256, hue2rgb(m1, m2, H - 1 / 3) * 256, 1];
       if (l === 4) {
         a[3] = c[3];
       }
@@ -654,16 +859,16 @@ Object.assign(Color, {
     }
     return null;
   },
-  fromArray( /* Array */arr) {
-    const result = new Color();
+  fromArray: function fromArray( /* Array */arr) {
+    var result = new Color();
     result.set(Number(arr[0]), Number(arr[1]), Number(arr[2]), Number(arr[3]));
     if (isNaN(result.a)) {
       result.a = 1;
     }
     return result.sanitize();
   },
-  fromString( /* String */str) {
-    const s = Color.hexByName[str];
+  fromString: function fromString( /* String */str) {
+    var s = Color.hexByName[str];
     return s && Color.fromHex(s) || Color.fromRgb(str) || Color.fromHex(str) || Color.fromHsl(str);
   }
 });
@@ -673,8 +878,11 @@ Color.named = Color.namedColor = namedColor;
 module.exports = Color;
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports) {
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 module.exports = {
   aliceblue: '#f0f8ff',
@@ -827,115 +1035,6 @@ module.exports = {
   yellow: '#ffff00',
   yellowgreen: '#9acd32'
 };
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const randomTree = __webpack_require__(17);
-const drawLink = __webpack_require__(15);
-const drawNode = __webpack_require__(16);
-
-const canvas = document.getElementById('canvas');
-const containerNode = document.getElementById('container');
-const formNode = document.getElementById('layout-props');
-const layoutTimeNode = document.getElementById('layout-time');
-const renderTimeNode = document.getElementById('render-time');
-
-const PEM = 18;
-const ctx = canvas.getContext('2d');
-
-const HORIZONTAL_LAYOUTS = ['LeftLogical', 'RightLogical', 'Standard'];
-function isHorizontal(type) {
-  return HORIZONTAL_LAYOUTS.indexOf(type) > -1;
-}
-
-function setCanvasSize() {
-  canvas.width = containerNode.offsetWidth;
-  canvas.height = containerNode.offsetHeight;
-}
-
-function render() {
-  const count = formNode.dataSize.value;
-  const layoutType = formNode.layoutType.value;
-  const root = randomTree(count);
-  Object.assign(root, {
-    isRoot: true
-  });
-
-  ctx.font = `${PEM}px Courier, monospace`;
-
-  const MindmapLayout = MindmapLayouts[layoutType];
-  const layout = new MindmapLayout(root, {
-    getHeight(d) {
-      if (d.isRoot) {
-        return PEM * 2.4;
-      }
-      return PEM * 1.2;
-    },
-    getWidth(d) {
-      if (d.isRoot) {
-        return ctx.measureText(d.name).width * 2 + PEM * 1.6;
-      }
-      return ctx.measureText(d.name).width + PEM * 1.6;
-    },
-    getHGap(d) {
-      if (d.isRoot) {
-        return PEM * 2;
-      }
-      return Math.round(PEM / 2);
-    },
-    getVGap(d) {
-      if (d.isRoot) {
-        return PEM * 2;
-      }
-      return Math.round(PEM / 2);
-    }
-  });
-
-  const t0 = window.performance.now();
-
-  const rootNode = layout.doLayout();
-
-  const t1 = window.performance.now();
-
-  setCanvasSize();
-  const bb = rootNode.getBoundingBox();
-  const scale = Math.max(bb.width / canvas.width, bb.height / canvas.height);
-  canvas.width = bb.width / scale;
-  canvas.height = bb.height / scale;
-
-  if (ctx) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    rootNode.eachNode(node => {
-      node.children.forEach(child => {
-        drawLink(node, child, ctx, isHorizontal(layoutType), scale);
-      });
-      drawNode(node, ctx, scale);
-    });
-  }
-
-  const t2 = window.performance.now();
-
-  layoutTimeNode.innerHTML = Math.round(t1 - t0);
-  renderTimeNode.innerHTML = Math.round(t2 - t1);
-}
-
-formNode.addEventListener('change', render);
-formNode.addEventListener('submit', e => {
-  e.preventDefault();
-  render();
-  return false;
-});
-window.onresize = () => {
-  setCanvasSize();
-  render();
-};
-
-setCanvasSize();
-render();
-
-module.exports = MindmapLayouts;
 
 /***/ })
 /******/ ]);

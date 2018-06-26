@@ -22,7 +22,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-            'es2017',
+            'es2015',
             'stage-0',
             'stage-1',
             'stage-2',

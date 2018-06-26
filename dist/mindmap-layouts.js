@@ -11,41 +11,41 @@
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -56,7 +56,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -65,15 +65,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,7 +81,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const WrappedTree = __webpack_require__(6);
+"use strict";
+
+
+var WrappedTree = __webpack_require__(6);
 
 // node utils
 function moveRight(node, move, isHorizontal) {
@@ -90,21 +93,21 @@ function moveRight(node, move, isHorizontal) {
   } else {
     node.x += move;
   }
-  node.children.forEach(child => {
+  node.children.forEach(function (child) {
     moveRight(child, move, isHorizontal);
   });
 }
 
 function getMin(node, isHorizontal) {
-  let res = isHorizontal ? node.y : node.x;
-  node.children.forEach(child => {
+  var res = isHorizontal ? node.y : node.x;
+  node.children.forEach(function (child) {
     res = Math.min(getMin(child, isHorizontal), res);
   });
   return res;
 }
 
 function normalize(node, isHorizontal) {
-  const min = getMin(node, isHorizontal);
+  var min = getMin(node, isHorizontal);
   moveRight(node, -min, isHorizontal);
 }
 
@@ -114,12 +117,14 @@ function convertBack(converted /* Tree */, root /* TreeNode */, isHorizontal) {
   } else {
     root.x = converted.x;
   }
-  converted.c.forEach((child, i) => {
+  converted.c.forEach(function (child, i) {
     convertBack(child, root.children[i], isHorizontal);
   });
 }
 
-function layer(node, isHorizontal, d = 0) {
+function layer(node, isHorizontal) {
+  var d = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
   if (isHorizontal) {
     node.x = d;
     d += node.width;
@@ -127,22 +132,22 @@ function layer(node, isHorizontal, d = 0) {
     node.y = d;
     d += node.height;
   }
-  node.children.forEach(child => {
+  node.children.forEach(function (child) {
     layer(child, isHorizontal, d);
   });
 }
 
-module.exports = (root, isHorizontal) => {
+module.exports = function (root, isHorizontal) {
   function firstWalk(t) {
     if (t.cs === 0) {
       setExtremes(t);
       return;
     }
     firstWalk(t.c[0]);
-    let ih = updateIYL(bottom(t.c[0].el), 0, null);
-    for (let i = 1; i < t.cs; ++i) {
+    var ih = updateIYL(bottom(t.c[0].el), 0, null);
+    for (var i = 1; i < t.cs; ++i) {
       firstWalk(t.c[i]);
-      const min = bottom(t.c[i].er);
+      var min = bottom(t.c[i].er);
       separate(t, i, ih);
       ih = updateIYL(min, i, ih);
     }
@@ -164,19 +169,19 @@ module.exports = (root, isHorizontal) => {
   }
 
   function separate(t, i, ih) {
-    let sr = t.c[i - 1];
-    let mssr = sr.mod;
-    let cl = t.c[i];
-    let mscl = cl.mod;
+    var sr = t.c[i - 1];
+    var mssr = sr.mod;
+    var cl = t.c[i];
+    var mscl = cl.mod;
     while (sr != null && cl != null) {
       if (bottom(sr) > ih.low) ih = ih.nxt;
-      const dist = mssr + sr.prelim + sr.w - (mscl + cl.prelim);
+      var dist = mssr + sr.prelim + sr.w - (mscl + cl.prelim);
       if (dist > 0) {
         mscl += dist;
         moveSubtree(t, i, ih.index, dist);
       }
-      const sy = bottom(sr);
-      const cy = bottom(cl);
+      var sy = bottom(sr);
+      var cy = bottom(cl);
       if (sy <= cy) {
         sr = nextRightContour(sr);
         if (sr != null) mssr += sr.mod;
@@ -213,9 +218,9 @@ module.exports = (root, isHorizontal) => {
   }
 
   function setLeftThread(t, i, cl, modsumcl) {
-    const li = t.c[0].el;
+    var li = t.c[0].el;
     li.tl = cl;
-    const diff = modsumcl - cl.mod - t.c[0].msel;
+    var diff = modsumcl - cl.mod - t.c[0].msel;
     li.mod += diff;
     li.prelim -= diff;
     t.c[0].el = t.c[i].el;
@@ -223,9 +228,9 @@ module.exports = (root, isHorizontal) => {
   }
 
   function setRightThread(t, i, sr, modsumsr) {
-    const ri = t.c[i].er;
+    var ri = t.c[i].er;
     ri.tr = sr;
-    const diff = modsumsr - sr.mod - t.c[i].mser;
+    var diff = modsumsr - sr.mod - t.c[i].mser;
     ri.mod += diff;
     ri.prelim -= diff;
     t.c[i].er = t.c[i - 1].er;
@@ -240,14 +245,14 @@ module.exports = (root, isHorizontal) => {
     modsum += t.mod;
     t.x = t.prelim + modsum;
     addChildSpacing(t);
-    for (let i = 0; i < t.cs; i++) {
+    for (var i = 0; i < t.cs; i++) {
       secondWalk(t.c[i], modsum);
     }
   }
 
   function distributeExtra(t, i, si, dist) {
     if (si !== i - 1) {
-      const nr = i - si;
+      var nr = i - si;
       t.c[si + 1].shift += dist / nr;
       t.c[i].shift -= dist / nr;
       t.c[i].change -= dist - dist / nr;
@@ -255,9 +260,9 @@ module.exports = (root, isHorizontal) => {
   }
 
   function addChildSpacing(t) {
-    let d = 0;
-    let modsumdelta = 0;
-    for (let i = 0; i < t.cs; i++) {
+    var d = 0;
+    var modsumdelta = 0;
+    for (var i = 0; i < t.cs; i++) {
       d += t.c[i].shift;
       modsumdelta += d + t.c[i].change;
       t.c[i].mod += modsumdelta;
@@ -269,15 +274,15 @@ module.exports = (root, isHorizontal) => {
       ih = ih.nxt;
     }
     return {
-      low,
-      index,
+      low: low,
+      index: index,
       nxt: ih
     };
   }
 
   // do layout
   layer(root, isHorizontal);
-  const wt = WrappedTree.fromNode(root, isHorizontal);
+  var wt = WrappedTree.fromNode(root, isHorizontal);
   // console.log(wt)
   firstWalk(wt);
   secondWalk(wt, 0);
@@ -291,97 +296,123 @@ module.exports = (root, isHorizontal) => {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Node = __webpack_require__(4);
+"use strict";
 
-class Layout {
-  constructor(root, options = {}, extraEdges = []) {
-    const me = this;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Node = __webpack_require__(4);
+
+var Layout = function () {
+  function Layout(root) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var extraEdges = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    _classCallCheck(this, Layout);
+
+    var me = this;
     me.root = new Node(root, options);
     me.options = options;
     me.extraEdges = extraEdges;
   }
 
-  doLayout() {
-    throw new Error('please override this method');
-  }
-
-  getNodes() {
-    const root = this.root;
-    const nodes = [];
-    let countByDepth = {};
-    root.eachNode(node => {
-      countByDepth[node.depth] = countByDepth[node.depth] || 0;
-      countByDepth[node.depth]++;
-      nodes.push({
-        // origin data
-        data: node.data,
-        id: node.id,
-        // position
-        x: node.x,
-        y: node.y,
-        centX: node.x + node.width / 2,
-        centY: node.y + node.height / 2,
-        // size
-        hgap: node.hgap,
-        vgap: node.vgap,
-        height: node.height,
-        width: node.width,
-        actualHeight: node.height - node.vgap * 2,
-        actualWidth: node.width - node.hgap * 2,
-        // depth
-        depth: node.depth
-      });
-    });
-    return nodes;
-  }
-
-  getEdges() {
-    const me = this;
-    const extraEdges = me.extraEdges;
-    const root = this.root;
-    const edges = [];
-    root.eachNode(node => {
-      node.children.forEach(child => {
-        edges.push({
-          source: node.id,
-          target: child.id
+  _createClass(Layout, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      throw new Error('please override this method');
+    }
+  }, {
+    key: 'getNodes',
+    value: function getNodes() {
+      var root = this.root;
+      var nodes = [];
+      var countByDepth = {};
+      root.eachNode(function (node) {
+        countByDepth[node.depth] = countByDepth[node.depth] || 0;
+        countByDepth[node.depth]++;
+        nodes.push({
+          // origin data
+          data: node.data,
+          id: node.id,
+          // position
+          x: node.x,
+          y: node.y,
+          centX: node.x + node.width / 2,
+          centY: node.y + node.height / 2,
+          // size
+          hgap: node.hgap,
+          vgap: node.vgap,
+          height: node.height,
+          width: node.width,
+          actualHeight: node.height - node.vgap * 2,
+          actualWidth: node.width - node.hgap * 2,
+          // depth
+          depth: node.depth
         });
       });
-    });
-    edges.concat(extraEdges);
-    return edges;
-  }
-}
+      return nodes;
+    }
+  }, {
+    key: 'getEdges',
+    value: function getEdges() {
+      var me = this;
+      var extraEdges = me.extraEdges;
+      var root = this.root;
+      var edges = [];
+      root.eachNode(function (node) {
+        node.children.forEach(function (child) {
+          edges.push({
+            source: node.id,
+            target: child.id
+          });
+        });
+      });
+      edges.concat(extraEdges);
+      return edges;
+    }
+  }]);
+
+  return Layout;
+}();
 
 module.exports = Layout;
 
 /***/ }),
 /* 3 */,
 /* 4 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-const PEM = 18;
-const DEFAULT_HEIGHT = PEM * 2;
-const DEFAULT_GAP = PEM;
+"use strict";
 
-const DEFAULT_OPTIONS = {
-  getId(d) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PEM = 18;
+var DEFAULT_HEIGHT = PEM * 2;
+var DEFAULT_GAP = PEM;
+
+var DEFAULT_OPTIONS = {
+  getId: function getId(d) {
     return d.id || d.name;
   },
-  getHGap(d) {
+  getHGap: function getHGap(d) {
     return d.hgap || DEFAULT_GAP;
   },
-  getVGap(d) {
+  getVGap: function getVGap(d) {
     return d.vgap || DEFAULT_GAP;
   },
-  getChildren(d) {
+  getChildren: function getChildren(d) {
     return d.children;
   },
-  getHeight(d) {
+  getHeight: function getHeight(d) {
     return d.height || DEFAULT_HEIGHT;
   },
-  getWidth(d) {
-    const name = d.name || ' ';
+  getWidth: function getWidth(d) {
+    var name = d.name || ' ';
     return d.width || name.split('').length * PEM;
   }
 };
@@ -391,13 +422,18 @@ function fallbackExecuteOnData(func1, func2, data) {
   return func2(data);
 }
 
-class Node {
-  constructor(data, options = {}, isolated) {
-    const me = this;
+var Node = function () {
+  function Node(data) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var isolated = arguments[2];
+
+    _classCallCheck(this, Node);
+
+    var me = this;
     me.vgap = me.hgap = 0;
     if (data instanceof Node) return data;
-    const hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
-    const vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
+    var hgap = fallbackExecuteOnData(options.getHGap, DEFAULT_OPTIONS.getHGap, data);
+    var vgap = fallbackExecuteOnData(options.getVGap, DEFAULT_OPTIONS.getVGap, data);
     me.data = data;
     me.width = fallbackExecuteOnData(options.getWidth, DEFAULT_OPTIONS.getWidth, data);
     me.height = fallbackExecuteOnData(options.getHeight, DEFAULT_OPTIONS.getHeight, data);
@@ -405,16 +441,16 @@ class Node {
     me.x = me.y = 0;
     me.depth = 0;
     if (!isolated && !data.isCollapsed) {
-      const nodes = [me];
-      let node;
+      var nodes = [me];
+      var node = void 0;
       while (node = nodes.pop()) {
         if (!node.data.isCollapsed) {
-          const children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
-          const length = children ? children.length : 0;
+          var children = fallbackExecuteOnData(options.getChildren, DEFAULT_OPTIONS.getChildren, node.data);
+          var length = children ? children.length : 0;
           node.children = [];
           if (children && length) {
-            for (let i = 0; i < length; i++) {
-              const child = new Node(children[i], options);
+            for (var i = 0; i < length; i++) {
+              var child = new Node(children[i], options);
               node.children.push(child);
               nodes.push(child);
               child.parent = node;
@@ -430,121 +466,143 @@ class Node {
     me.addGap(hgap, vgap);
   }
 
-  isRoot() {
-    return this.depth === 0;
-  }
-
-  addGap(hgap, vgap) {
-    const me = this;
-    me.hgap += hgap;
-    me.vgap += vgap;
-    me.width += 2 * hgap;
-    me.height += 2 * vgap;
-  }
-
-  eachNode(callback) {
-    const me = this;
-    let nodes = [me];
-    let current = null;
-    while (current = nodes.pop()) {
-      callback(current);
-      nodes = nodes.concat(current.children);
+  _createClass(Node, [{
+    key: 'isRoot',
+    value: function isRoot() {
+      return this.depth === 0;
     }
-  }
+  }, {
+    key: 'addGap',
+    value: function addGap(hgap, vgap) {
+      var me = this;
+      me.hgap += hgap;
+      me.vgap += vgap;
+      me.width += 2 * hgap;
+      me.height += 2 * vgap;
+    }
+  }, {
+    key: 'eachNode',
+    value: function eachNode(callback) {
+      var me = this;
+      var nodes = [me];
+      var current = null;
+      while (current = nodes.pop()) {
+        callback(current);
+        nodes = nodes.concat(current.children);
+      }
+    }
+  }, {
+    key: 'getBoundingBox',
+    value: function getBoundingBox() {
+      var bb = {
+        left: Number.MAX_VALUE,
+        top: Number.MAX_VALUE,
+        width: 0,
+        height: 0
+      };
+      this.eachNode(function (node) {
+        bb.left = Math.min(bb.left, node.x);
+        bb.top = Math.min(bb.top, node.y);
+        bb.width = Math.max(bb.width, node.x + node.width);
+        bb.height = Math.max(bb.height, node.y + node.height);
+      });
+      return bb;
+    }
+  }, {
+    key: 'translate',
+    value: function translate() {
+      var tx = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var ty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-  getBoundingBox() {
-    const bb = {
-      left: Number.MAX_VALUE,
-      top: Number.MAX_VALUE,
-      width: 0,
-      height: 0
-    };
-    this.eachNode(node => {
-      bb.left = Math.min(bb.left, node.x);
-      bb.top = Math.min(bb.top, node.y);
-      bb.width = Math.max(bb.width, node.x + node.width);
-      bb.height = Math.max(bb.height, node.y + node.height);
-    });
-    return bb;
-  }
+      this.eachNode(function (node) {
+        node.x += tx;
+        node.y += ty;
+      });
+    }
+  }, {
+    key: 'right2left',
+    value: function right2left() {
+      var me = this;
+      var bb = me.getBoundingBox();
+      me.eachNode(function (node) {
+        node.x = node.x - (node.x - bb.left) * 2 - node.width;
+      });
+      me.translate(bb.width, 0);
+    }
+  }, {
+    key: 'down2up',
+    value: function down2up() {
+      var me = this;
+      var bb = me.getBoundingBox();
+      me.eachNode(function (node) {
+        node.y = node.y - (node.y - bb.top) * 2 - node.height;
+      });
+      me.translate(0, bb.height);
+    }
+  }]);
 
-  translate(tx = 0, ty = 0) {
-    this.eachNode(node => {
-      node.x += tx;
-      node.y += ty;
-    });
-  }
-
-  right2left() {
-    const me = this;
-    const bb = me.getBoundingBox();
-    me.eachNode(node => {
-      node.x = node.x - (node.x - bb.left) * 2 - node.width;
-    });
-    me.translate(bb.width, 0);
-  }
-
-  down2up() {
-    const me = this;
-    const bb = me.getBoundingBox();
-    me.eachNode(node => {
-      node.y = node.y - (node.y - bb.top) * 2 - node.height;
-    });
-    me.translate(0, bb.height);
-  }
-}
+  return Node;
+}();
 
 module.exports = Node;
 
 /***/ }),
 /* 5 */,
 /* 6 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-class WrappedTree {
-
-  // Array of children and number of children.
+"use strict";
 
 
-  // Sum of modifiers at the extreme nodes.
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WrappedTree =
+
+// Array of children and number of children.
 
 
-  // Extreme left and right nodes.
+// Sum of modifiers at the extreme nodes.
 
 
-  // Left and right thread.
+// Extreme left and right nodes.
 
-  // Width and height.
-  constructor(w, h, y, c = []) {
-    this.w = 0;
-    this.h = 0;
-    this.x = 0;
-    this.y = 0;
-    this.prelim = 0;
-    this.mod = 0;
-    this.shift = 0;
-    this.change = 0;
-    this.tl = null;
-    this.tr = null;
-    this.el = null;
-    this.er = null;
-    this.msel = 0;
-    this.mser = 0;
-    this.c = [];
-    this.cs = 0;
 
-    this.w = w;
-    this.h = h;
-    this.y = y;
-    this.c = c;
-    this.cs = c.length;
-  }
-}
+// Left and right thread.
 
-WrappedTree.fromNode = (root, isHorizontal) => {
+// Width and height.
+function WrappedTree(w, h, y) {
+  var c = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+  _classCallCheck(this, WrappedTree);
+
+  this.w = 0;
+  this.h = 0;
+  this.x = 0;
+  this.y = 0;
+  this.prelim = 0;
+  this.mod = 0;
+  this.shift = 0;
+  this.change = 0;
+  this.tl = null;
+  this.tr = null;
+  this.el = null;
+  this.er = null;
+  this.msel = 0;
+  this.mser = 0;
+  this.c = [];
+  this.cs = 0;
+
+  this.w = w;
+  this.h = h;
+  this.y = y;
+  this.c = c;
+  this.cs = c.length;
+};
+
+WrappedTree.fromNode = function (root, isHorizontal) {
   if (!root) return null;
-  const children = [];
-  root.children.forEach(child => {
+  var children = [];
+  root.children.forEach(function (child) {
     children.push(WrappedTree.fromNode(child, isHorizontal));
   });
   if (isHorizontal) return new WrappedTree(root.height, root.width, root.x, children);
@@ -568,6 +626,9 @@ module.exports = WrappedTree;
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 module.exports = {
   Node: __webpack_require__(4),
   WrappedTree: __webpack_require__(6)
@@ -577,15 +638,39 @@ module.exports = {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Layout = __webpack_require__(2);
-const nonLayeredTidyTree = __webpack_require__(1);
+"use strict";
 
-class DownwardOrganizational extends Layout {
-  doLayout() {
-    const root = this.root;
-    return nonLayeredTidyTree(root, false);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = __webpack_require__(2);
+var nonLayeredTidyTree = __webpack_require__(1);
+
+var DownwardOrganizational = function (_Layout) {
+  _inherits(DownwardOrganizational, _Layout);
+
+  function DownwardOrganizational() {
+    _classCallCheck(this, DownwardOrganizational);
+
+    return _possibleConstructorReturn(this, (DownwardOrganizational.__proto__ || Object.getPrototypeOf(DownwardOrganizational)).apply(this, arguments));
   }
-}
+
+  _createClass(DownwardOrganizational, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      var root = this.root;
+      return nonLayeredTidyTree(root, false);
+    }
+  }]);
+
+  return DownwardOrganizational;
+}(Layout);
 
 module.exports = DownwardOrganizational;
 
@@ -593,17 +678,41 @@ module.exports = DownwardOrganizational;
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Layout = __webpack_require__(2);
-const nonLayeredTidyTree = __webpack_require__(1);
+"use strict";
 
-class LeftLogical extends Layout {
-  doLayout() {
-    const root = this.root;
-    nonLayeredTidyTree(root, true);
-    root.right2left();
-    return root;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = __webpack_require__(2);
+var nonLayeredTidyTree = __webpack_require__(1);
+
+var LeftLogical = function (_Layout) {
+  _inherits(LeftLogical, _Layout);
+
+  function LeftLogical() {
+    _classCallCheck(this, LeftLogical);
+
+    return _possibleConstructorReturn(this, (LeftLogical.__proto__ || Object.getPrototypeOf(LeftLogical)).apply(this, arguments));
   }
-}
+
+  _createClass(LeftLogical, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      var root = this.root;
+      nonLayeredTidyTree(root, true);
+      root.right2left();
+      return root;
+    }
+  }]);
+
+  return LeftLogical;
+}(Layout);
 
 module.exports = LeftLogical;
 
@@ -611,15 +720,39 @@ module.exports = LeftLogical;
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Layout = __webpack_require__(2);
-const nonLayeredTidyTree = __webpack_require__(1);
+"use strict";
 
-class RightLogical extends Layout {
-  doLayout() {
-    const root = this.root;
-    return nonLayeredTidyTree(root, true);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = __webpack_require__(2);
+var nonLayeredTidyTree = __webpack_require__(1);
+
+var RightLogical = function (_Layout) {
+  _inherits(RightLogical, _Layout);
+
+  function RightLogical() {
+    _classCallCheck(this, RightLogical);
+
+    return _possibleConstructorReturn(this, (RightLogical.__proto__ || Object.getPrototypeOf(RightLogical)).apply(this, arguments));
   }
-}
+
+  _createClass(RightLogical, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      var root = this.root;
+      return nonLayeredTidyTree(root, true);
+    }
+  }]);
+
+  return RightLogical;
+}(Layout);
 
 module.exports = RightLogical;
 
@@ -627,44 +760,68 @@ module.exports = RightLogical;
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Layout = __webpack_require__(2);
-const Node = __webpack_require__(4);
-const nonLayeredTidyTree = __webpack_require__(1);
+"use strict";
 
-class Standard extends Layout {
-  doLayout() {
-    const me = this;
-    const root = me.root;
-    const options = me.options;
-    // separate into left and right trees
-    const leftTree = new Node(root.data, options, true);
-    const rightTree = new Node(root.data, options, true);
-    const treeSize = root.children.length;
-    const rightTreeSize = Math.round(treeSize / 2);
-    for (let i = 0; i < treeSize; i++) {
-      const child = root.children[i];
-      if (i < rightTreeSize) {
-        rightTree.children.push(child);
-      } else {
-        leftTree.children.push(child);
-      }
-    }
-    // do layout for left and right trees
-    nonLayeredTidyTree(rightTree, true);
-    nonLayeredTidyTree(leftTree, true);
-    leftTree.right2left();
-    // combine left and right trees
-    rightTree.translate(leftTree.x - rightTree.x, leftTree.y - rightTree.y);
-    // translate root
-    root.x = leftTree.x;
-    root.y = rightTree.y;
-    const bb = root.getBoundingBox();
-    if (bb.top < 0) {
-      root.translate(0, -bb.top);
-    }
-    return root;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = __webpack_require__(2);
+var Node = __webpack_require__(4);
+var nonLayeredTidyTree = __webpack_require__(1);
+
+var Standard = function (_Layout) {
+  _inherits(Standard, _Layout);
+
+  function Standard() {
+    _classCallCheck(this, Standard);
+
+    return _possibleConstructorReturn(this, (Standard.__proto__ || Object.getPrototypeOf(Standard)).apply(this, arguments));
   }
-}
+
+  _createClass(Standard, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      var me = this;
+      var root = me.root;
+      var options = me.options;
+      // separate into left and right trees
+      var leftTree = new Node(root.data, options, true);
+      var rightTree = new Node(root.data, options, true);
+      var treeSize = root.children.length;
+      var rightTreeSize = Math.round(treeSize / 2);
+      for (var i = 0; i < treeSize; i++) {
+        var child = root.children[i];
+        if (i < rightTreeSize) {
+          rightTree.children.push(child);
+        } else {
+          leftTree.children.push(child);
+        }
+      }
+      // do layout for left and right trees
+      nonLayeredTidyTree(rightTree, true);
+      nonLayeredTidyTree(leftTree, true);
+      leftTree.right2left();
+      // combine left and right trees
+      rightTree.translate(leftTree.x - rightTree.x, leftTree.y - rightTree.y);
+      // translate root
+      root.x = leftTree.x;
+      root.y = rightTree.y;
+      var bb = root.getBoundingBox();
+      if (bb.top < 0) {
+        root.translate(0, -bb.top);
+      }
+      return root;
+    }
+  }]);
+
+  return Standard;
+}(Layout);
 
 module.exports = Standard;
 
@@ -672,49 +829,71 @@ module.exports = Standard;
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Layout = __webpack_require__(2);
-const nonLayeredTidyTree = __webpack_require__(1);
+"use strict";
 
-class UpwardOrganizational extends Layout {
-  doLayout() {
-    const root = this.root;
-    nonLayeredTidyTree(root, false);
-    root.down2up();
-    return root;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = __webpack_require__(2);
+var nonLayeredTidyTree = __webpack_require__(1);
+
+var UpwardOrganizational = function (_Layout) {
+  _inherits(UpwardOrganizational, _Layout);
+
+  function UpwardOrganizational() {
+    _classCallCheck(this, UpwardOrganizational);
+
+    return _possibleConstructorReturn(this, (UpwardOrganizational.__proto__ || Object.getPrototypeOf(UpwardOrganizational)).apply(this, arguments));
   }
-}
+
+  _createClass(UpwardOrganizational, [{
+    key: 'doLayout',
+    value: function doLayout() {
+      var root = this.root;
+      nonLayeredTidyTree(root, false);
+      root.down2up();
+      return root;
+    }
+  }]);
+
+  return UpwardOrganizational;
+}(Layout);
 
 module.exports = UpwardOrganizational;
 
 /***/ }),
 /* 24 */,
 /* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const RightLogical = __webpack_require__(21);
-const DownwardOrganizational = __webpack_require__(19);
-const UpwardOrganizational = __webpack_require__(23);
-const LeftLogical = __webpack_require__(20);
-const Standard = __webpack_require__(22);
-const {
-  Node,
-  WrappedTree
-} = __webpack_require__(18);
+"use strict";
+
+
+var RightLogical = __webpack_require__(21);
+var DownwardOrganizational = __webpack_require__(19);
+var UpwardOrganizational = __webpack_require__(23);
+var LeftLogical = __webpack_require__(20);
+var Standard = __webpack_require__(22);
+
+var _require = __webpack_require__(18),
+    Node = _require.Node,
+    WrappedTree = _require.WrappedTree;
 
 module.exports = {
-  RightLogical,
-  DownwardOrganizational,
-  UpwardOrganizational,
-  LeftLogical,
-  Standard,
-  Node,
-  WrappedTree
+  RightLogical: RightLogical,
+  DownwardOrganizational: DownwardOrganizational,
+  UpwardOrganizational: UpwardOrganizational,
+  LeftLogical: LeftLogical,
+  Standard: Standard,
+  Node: Node,
+  WrappedTree: WrappedTree
 };
 
 /***/ })
